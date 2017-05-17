@@ -175,6 +175,11 @@ class Requester:
     def requestMultipartAndCheck(self, verb, url, parameters=None, headers=None, input=None):
         return self.__check(*self.requestMultipart(verb, url, parameters, headers, input))
 
+    def requestBlobAndCheck(self, verb, url, parameters=None, headers=None, input=None):
+        o = urlparse.urlparse(url)
+        self.__hostname = o.hostname
+        return self.__check(*self.requestBlob(verb, url, parameters, headers, input))
+
     def __check(self, status, responseHeaders, output):
         output = self.__structuredFromJson(output)
         if status >= 400:
@@ -236,13 +241,10 @@ class Requester:
             else:
                 guessed_type = mimetypes.guess_type(input)
                 mime_type = guessed_type[0] if guessed_type[0] is not None else "application/octet-stream"
-            f = open(local_path)
+            f = open(local_path, 'rb')
             return mime_type, f
-
-        #todo: determine how to add in requestBlobAndCheck feature
-        status, responseHeaders, output = self.__requestEncode(None, verb, url, parameters, headers, input, encode)
-
-        return status, responseHeaders, json.loads(output)
+        
+        return self.__requestEncode(None, verb, url, parameters, headers, input, encode)
 
     def __requestEncode(self, cnx, verb, url, parameters, requestHeaders, input, encode):
         assert verb in ["HEAD", "GET", "POST", "PATCH", "PUT", "DELETE"]
