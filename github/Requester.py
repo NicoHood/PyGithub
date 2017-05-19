@@ -43,6 +43,7 @@ import Consts
 import re
 import os
 import mimetypes
+from io import IOBase
 
 atLeastPython26 = sys.hexversion >= 0x02060000
 atLeastPython3 = sys.hexversion >= 0x03000000
@@ -243,7 +244,9 @@ class Requester:
                 mime_type = guessed_type[0] if guessed_type[0] is not None else "application/octet-stream"
             f = open(local_path, 'rb')
             return mime_type, f
-        
+
+        if input:
+            headers["Content-Length"] = os.path.getsize(input)
         return self.__requestEncode(None, verb, url, parameters, headers, input, encode)
 
     def __requestEncode(self, cnx, verb, url, parameters, requestHeaders, input, encode):
@@ -301,6 +304,9 @@ class Requester:
         output = response.read()
 
         cnx.close()
+        if input:
+            if isinstance(input, IOBase):
+                input.close()
 
         self.__log(verb, url, requestHeaders, input, status, responseHeaders, output)
 
