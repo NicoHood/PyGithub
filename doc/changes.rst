@@ -1,4 +1,18 @@
-Change log\n==========\n\nStable versions\n~~~~~~~~~~~~~~~\n\nVersion 1.34 (abril 04, 2017)\n-----------------------------------\n\n\n* Add Support for Pull Request Reviews feature.
+Change log
+==========
+
+Stable versions
+~~~~~~~~~~~~~~~
+
+Version 1.35 (July 10, 2017)
+-----------------------------------
+
+* Add Support for repository collaborator invitations.
+
+Version 1.34 (abril 04, 2017)
+-----------------------------------
+
+* Add Support for Pull Request Reviews feature.
 
 Version 1.32 (February 1, 2017)
 -----------------------------------

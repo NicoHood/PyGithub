@@ -28,7 +28,7 @@
 import setuptools
 import textwrap
 
-version = "1.34"
+version = "1.35"
 
 
 if __name__ == "__main__":
@@ -96,5 +96,8 @@ if __name__ == "__main__":
         use_2to3=True,
         install_requires=[
             "pyjwt"
-        ]
+        ],
+        extras_require = {
+            "integrations": ["cryptography"]
+        }
     )
